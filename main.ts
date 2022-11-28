@@ -24,8 +24,9 @@ function YELLOW () {
 }
 let range: neopixel.Strip = null
 let strip: neopixel.Strip = null
+basic.showIcon(IconNames.Yes)
 strip = neopixel.create(DigitalPin.P16, 3, NeoPixelMode.RGB)
-strip.setBrightness(70)
+strip.setBrightness(50)
 basic.forever(function () {
     RED()
     basic.pause(2000)
