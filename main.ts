@@ -15,6 +15,7 @@ input.onButtonPressed(Button.A, function () {
         basic.pause(1000)
         basic.showIcon(IconNames.No)
     }
+    traffic_light()
 })
 function traffic_light () {
     RED()
@@ -29,6 +30,7 @@ function traffic_light () {
         basic.pause(1000)
         crosswalk_counter += -1
     }
+    basic.showIcon(IconNames.No)
     YELLOW()
     basic.pause(3000)
     basic.showIcon(IconNames.No)
@@ -66,5 +68,5 @@ strip = neopixel.create(DigitalPin.P0, 3, NeoPixelMode.RGB)
 strip.setBrightness(50)
 crosswalk = 0
 basic.forever(function () {
-	
+    traffic_light()
 })
