@@ -57,6 +57,12 @@ function GREEN () {
     range = strip.range(2, 1)
     range.showColor(neopixel.colors(NeoPixelColors.Green))
 }
+radio.onReceivedString(function (receivedString) {
+    if (receivedString == "EMERGENCY") {
+        basic.pause(2000)
+        EMERGENCY()
+    }
+})
 input.onButtonPressed(Button.B, function () {
     crosswalk = 1
     if (crosswalk == 1) {
@@ -79,6 +85,10 @@ input.onButtonPressed(Button.B, function () {
         just_red()
     }
 })
+function EMERGENCY () {
+    GREEN()
+    basic.showIcon(IconNames.No)
+}
 function YELLOW () {
     range = strip.range(0, 1)
     range.showColor(neopixel.colors(NeoPixelColors.Black))
@@ -99,6 +109,7 @@ strip = neopixel.create(DigitalPin.P0, 3, NeoPixelMode.RGB)
 strip.setBrightness(50)
 crosswalk = 0
 just_red()
+radio.setGroup(125)
 basic.forever(function () {
     pins.digitalWritePin(DigitalPin.P1, 0)
     control.waitMicros(2)
