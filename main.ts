@@ -80,6 +80,8 @@ radio.onReceivedString(function (receivedString) {
     if (receivedString == "EMERGENCY125") {
         basic.pause(2000)
         EMERGENCY()
+    } else if (receivedString == "EMERGENCY126") {
+    	
     }
 })
 input.onButtonPressed(Button.B, function () {
