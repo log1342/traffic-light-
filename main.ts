@@ -49,6 +49,25 @@ function just_red () {
     RED()
     basic.showIcon(IconNames.No)
 }
+function traffic_light2 () {
+    GREEN()
+    basic.showIcon(IconNames.No)
+    basic.pause(20000)
+    crosswalk_counter = 5
+    for (let index = 0; index < 5; index++) {
+        basic.showNumber(crosswalk_counter)
+        basic.pause(1000)
+        crosswalk_counter += -1
+    }
+    basic.showIcon(IconNames.No)
+    YELLOW()
+    basic.pause(3000)
+    basic.showIcon(IconNames.No)
+    RED()
+    basic.showIcon(IconNames.No)
+    basic.pause(25000)
+    just_red()
+}
 function GREEN () {
     range = strip.range(0, 1)
     range.showColor(neopixel.colors(NeoPixelColors.Black))
@@ -58,7 +77,7 @@ function GREEN () {
     range.showColor(neopixel.colors(NeoPixelColors.Green))
 }
 radio.onReceivedString(function (receivedString) {
-    if (receivedString == "EMERGENCY") {
+    if (receivedString == "EMERGENCY125") {
         basic.pause(2000)
         EMERGENCY()
     }
@@ -88,6 +107,8 @@ input.onButtonPressed(Button.B, function () {
 function EMERGENCY () {
     GREEN()
     basic.showIcon(IconNames.No)
+    basic.pause(15000)
+    just_red()
 }
 function YELLOW () {
     range = strip.range(0, 1)
@@ -119,7 +140,7 @@ basic.forever(function () {
     distance = pins.pulseIn(DigitalPin.P2, PulseValue.High) / 58
     basic.pause(2000)
     if (distance <= 1000 && crosswalk == 0) {
-        traffic_light()
+        traffic_light2()
     } else {
         just_red()
     }
