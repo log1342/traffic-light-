@@ -1,29 +1,33 @@
-input.onButtonPressed(Button.A, function () {
-    crosswalk += 1
-    if (crosswalk == 1) {
-        basic.showIcon(IconNames.No)
-        basic.pause(5000)
-        GREEN()
-        basic.showIcon(IconNames.StickFigure)
-        basic.pause(15000)
-        crosswalk_counter = 5
-        for (let index = 0; index < 4; index++) {
-            basic.showNumber(crosswalk_counter)
-            basic.pause(1000)
-            crosswalk_counter += -1
-        }
+function traffic_light3 () {
+    basic.showIcon(IconNames.No)
+    basic.pause(5000)
+    GREEN()
+    basic.showIcon(IconNames.StickFigure)
+    music.playMelody("C5 - C5 - C5 - C5 - ", 150)
+    music.playMelody("C5 - C5 - C5 - C5 - ", 170)
+    music.playMelody("C5 - C5 - C5 - C5 - ", 200)
+    music.playMelody("C5 - C5 - C5 - C5 - ", 220)
+    basic.pause(15000)
+    crosswalk_counter = 5
+    for (let index = 0; index < 4; index++) {
+        basic.showNumber(crosswalk_counter)
         basic.pause(1000)
-        basic.showIcon(IconNames.No)
-        crosswalk += -1
+        crosswalk_counter += -1
+        music.playMelody("C5 - C5 - C5 - C5 - ", 303)
     }
-    just_red()
+    basic.showIcon(IconNames.StickFigure)
+    basic.pause(1000)
+}
+input.onButtonPressed(Button.A, function () {
+    basic.pause(5000)
+    traffic_light()
 })
 function traffic_light () {
     GREEN()
     basic.showIcon(IconNames.StickFigure)
     basic.pause(20000)
     crosswalk_counter = 5
-    for (let index = 0; index < 5; index++) {
+    for (let index = 0; index < 4; index++) {
         basic.showNumber(crosswalk_counter)
         basic.pause(1000)
         crosswalk_counter += -1
@@ -32,9 +36,6 @@ function traffic_light () {
     YELLOW()
     basic.pause(3000)
     basic.showIcon(IconNames.No)
-    RED()
-    basic.showIcon(IconNames.No)
-    basic.pause(25000)
     just_red()
 }
 function RED () {
@@ -53,12 +54,6 @@ function traffic_light2 () {
     GREEN()
     basic.showIcon(IconNames.No)
     basic.pause(20000)
-    crosswalk_counter = 5
-    for (let index = 0; index < 5; index++) {
-        basic.showNumber(crosswalk_counter)
-        basic.pause(1000)
-        crosswalk_counter += -1
-    }
     basic.showIcon(IconNames.No)
     YELLOW()
     basic.pause(3000)
@@ -76,35 +71,21 @@ function GREEN () {
     range = strip.range(2, 1)
     range.showColor(neopixel.colors(NeoPixelColors.Green))
 }
+input.onButtonPressed(Button.AB, function () {
+    control.reset()
+})
 radio.onReceivedString(function (receivedString) {
     if (receivedString == "EMERGENCY125") {
-        basic.pause(2000)
+        basic.pause(1000)
         EMERGENCY()
     } else if (receivedString == "EMERGENCY126") {
-    	
+        basic.pause(1000)
+        just_red()
     }
 })
 input.onButtonPressed(Button.B, function () {
-    crosswalk = 1
-    if (crosswalk == 1) {
-        basic.showIcon(IconNames.No)
-        basic.pause(5000)
-        GREEN()
-        basic.showIcon(IconNames.StickFigure)
-        for (let index = 0; index < 4; index++) {
-            music.playMelody("C5 - C5 - C5 - C5 - ", 150)
-        }
-        basic.pause(15000)
-        crosswalk_counter = 5
-        for (let index = 0; index < 4; index++) {
-            basic.showNumber(crosswalk_counter)
-            basic.pause(1000)
-            crosswalk_counter += -1
-        }
-        basic.pause(1000)
-        basic.showIcon(IconNames.No)
-        just_red()
-    }
+    basic.pause(5000)
+    traffic_light3()
 })
 function EMERGENCY () {
     GREEN()
@@ -126,9 +107,8 @@ let range: neopixel.Strip = null
 let crosswalk_counter = 0
 let strip: neopixel.Strip = null
 let crosswalk = 0
-crosswalk = 0
 basic.showIcon(IconNames.Yes)
-strip = neopixel.create(DigitalPin.P0, 3, NeoPixelMode.RGB)
+strip = neopixel.create(DigitalPin.P16, 3, NeoPixelMode.RGB)
 strip.setBrightness(50)
 crosswalk = 0
 just_red()
