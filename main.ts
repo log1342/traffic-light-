@@ -121,7 +121,7 @@ basic.forever(function () {
     pins.digitalWritePin(DigitalPin.P1, 0)
     distance = pins.pulseIn(DigitalPin.P2, PulseValue.High) / 58
     basic.pause(2000)
-    if (distance <= 1000 && crosswalk == 0) {
+    if (distance <= 500 && crosswalk == 0) {
         traffic_light2()
     } else {
         just_red()
