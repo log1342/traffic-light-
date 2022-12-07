@@ -3,39 +3,40 @@ function traffic_light3 () {
     basic.pause(5000)
     GREEN()
     basic.showIcon(IconNames.StickFigure)
-    music.playMelody("C5 - C5 - C5 - C5 - ", 150)
-    music.playMelody("C5 - C5 - C5 - C5 - ", 170)
-    music.playMelody("C5 - C5 - C5 - C5 - ", 200)
-    music.playMelody("C5 - C5 - C5 - C5 - ", 220)
-    basic.pause(15000)
-    crosswalk_counter = 5
-    for (let index = 0; index < 4; index++) {
+    for (let index = 0; index < 6; index++) {
+        music.playMelody("C5 - C5 - C5 - C5 - ", 150)
+    }
+    crosswalk_counter = 7
+    for (let index = 0; index < 7; index++) {
         basic.showNumber(crosswalk_counter)
-        basic.pause(1000)
+        basic.pause(500)
         crosswalk_counter += -1
         music.playMelody("C5 - C5 - C5 - C5 - ", 303)
     }
-    basic.showIcon(IconNames.StickFigure)
-    basic.pause(1000)
+    YELLOW()
+    basic.showIcon(IconNames.No)
+    basic.pause(3000)
+    just_red()
 }
 input.onButtonPressed(Button.A, function () {
     basic.pause(5000)
     traffic_light()
 })
 function traffic_light () {
+    basic.showIcon(IconNames.No)
+    basic.pause(5000)
     GREEN()
     basic.showIcon(IconNames.StickFigure)
-    basic.pause(20000)
-    crosswalk_counter = 5
-    for (let index = 0; index < 4; index++) {
+    basic.pause(15000)
+    crosswalk_counter = 7
+    for (let index = 0; index < 7; index++) {
         basic.showNumber(crosswalk_counter)
         basic.pause(1000)
         crosswalk_counter += -1
     }
-    basic.showIcon(IconNames.No)
     YELLOW()
-    basic.pause(3000)
     basic.showIcon(IconNames.No)
+    basic.pause(3000)
     just_red()
 }
 function RED () {
@@ -84,7 +85,6 @@ radio.onReceivedString(function (receivedString) {
     }
 })
 input.onButtonPressed(Button.B, function () {
-    basic.pause(5000)
     traffic_light3()
 })
 function EMERGENCY () {
@@ -101,7 +101,6 @@ function YELLOW () {
     range = strip.range(2, 1)
     range.showColor(neopixel.colors(NeoPixelColors.Black))
 }
-// sensor number is 5.8
 let distance = 0
 let range: neopixel.Strip = null
 let crosswalk_counter = 0
@@ -110,7 +109,7 @@ let crosswalk = 0
 basic.showIcon(IconNames.Yes)
 strip = neopixel.create(DigitalPin.P16, 3, NeoPixelMode.RGB)
 strip.setBrightness(50)
-crosswalk = 0
+crosswalk_counter = 0
 just_red()
 radio.setGroup(125)
 basic.forever(function () {
@@ -120,8 +119,8 @@ basic.forever(function () {
     control.waitMicros(10)
     pins.digitalWritePin(DigitalPin.P1, 0)
     distance = pins.pulseIn(DigitalPin.P2, PulseValue.High) / 58
-    basic.pause(2000)
-    if (distance <= 500 && crosswalk == 0) {
+    basic.pause(5000)
+    if (distance <= 100 && crosswalk == 0) {
         traffic_light2()
     } else {
         just_red()
