@@ -50,6 +50,7 @@ function RED () {
 function just_red () {
     RED()
     basic.showIcon(IconNames.No)
+    sensor()
 }
 function traffic_light2 () {
     GREEN()
@@ -87,6 +88,17 @@ radio.onReceivedString(function (receivedString) {
 input.onButtonPressed(Button.B, function () {
     traffic_light3()
 })
+function sensor () {
+    pins.digitalWritePin(DigitalPin.P1, 0)
+    control.waitMicros(2)
+    pins.digitalWritePin(DigitalPin.P1, 1)
+    control.waitMicros(10)
+    pins.digitalWritePin(DigitalPin.P1, 0)
+    distance = pins.pulseIn(DigitalPin.P2, PulseValue.High) / 58
+    if (distance <= 5 && crosswalk == 0) {
+        traffic_light2()
+    }
+}
 function EMERGENCY () {
     GREEN()
     basic.showIcon(IconNames.No)
@@ -106,23 +118,10 @@ let range: neopixel.Strip = null
 let crosswalk_counter = 0
 let strip: neopixel.Strip = null
 let crosswalk = 0
+crosswalk = 0
 basic.showIcon(IconNames.Yes)
 strip = neopixel.create(DigitalPin.P16, 3, NeoPixelMode.RGB)
 strip.setBrightness(50)
 crosswalk_counter = 0
 just_red()
 radio.setGroup(125)
-basic.forever(function () {
-    pins.digitalWritePin(DigitalPin.P1, 0)
-    control.waitMicros(2)
-    pins.digitalWritePin(DigitalPin.P1, 1)
-    control.waitMicros(10)
-    pins.digitalWritePin(DigitalPin.P1, 0)
-    distance = pins.pulseIn(DigitalPin.P2, PulseValue.High) / 56
-    basic.pause(5000)
-    if (distance <= 58 && crosswalk == 0) {
-        traffic_light2()
-    } else {
-        just_red()
-    }
-})
