@@ -49,8 +49,8 @@ function RED () {
 }
 function just_red () {
     RED()
-    basic.showIcon(IconNames.No)
     sensor()
+    basic.showIcon(IconNames.No)
 }
 function traffic_light2 () {
     GREEN()
@@ -89,13 +89,19 @@ input.onButtonPressed(Button.B, function () {
     traffic_light3()
 })
 function sensor () {
-    pins.digitalWritePin(DigitalPin.P1, 0)
-    control.waitMicros(2)
-    pins.digitalWritePin(DigitalPin.P1, 1)
-    control.waitMicros(10)
-    pins.digitalWritePin(DigitalPin.P1, 0)
-    distance = pins.pulseIn(DigitalPin.P2, PulseValue.High) / 58
-    if (distance <= 5 && crosswalk == 0) {
+    counter = 0
+    for (let index = 0; index < 10; index++) {
+        pins.digitalWritePin(DigitalPin.P1, 0)
+        control.waitMicros(2)
+        pins.digitalWritePin(DigitalPin.P1, 1)
+        control.waitMicros(10)
+        pins.digitalWritePin(DigitalPin.P1, 0)
+        distance = pins.pulseIn(DigitalPin.P2, PulseValue.High) / 58
+        if (distance <= 5) {
+            counter += 1
+        }
+    }
+    if (counter >= 5) {
         traffic_light2()
     }
 }
@@ -114,11 +120,11 @@ function YELLOW () {
     range.showColor(neopixel.colors(NeoPixelColors.Black))
 }
 let distance = 0
+let counter = 0
 let range: neopixel.Strip = null
 let crosswalk_counter = 0
 let strip: neopixel.Strip = null
 let crosswalk = 0
-crosswalk = 0
 basic.showIcon(IconNames.Yes)
 strip = neopixel.create(DigitalPin.P16, 3, NeoPixelMode.RGB)
 strip.setBrightness(50)
