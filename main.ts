@@ -104,6 +104,7 @@ function sensor () {
     if (counter >= 5) {
         traffic_light2()
     }
+    basic.pause(5000)
 }
 function EMERGENCY () {
     GREEN()
@@ -131,3 +132,6 @@ strip.setBrightness(50)
 crosswalk_counter = 0
 just_red()
 radio.setGroup(125)
+basic.forever(function () {
+    sensor()
+})
