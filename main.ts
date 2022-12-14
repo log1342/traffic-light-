@@ -126,7 +126,7 @@ let range: neopixel.Strip = null
 let crosswalk_counter = 0
 let strip: neopixel.Strip = null
 let crosswalk = 0
-basic.showIcon(IconNames.Yes)
+basic.showIcon(IconNames.No)
 strip = neopixel.create(DigitalPin.P16, 3, NeoPixelMode.RGB)
 strip.setBrightness(50)
 crosswalk_counter = 0
