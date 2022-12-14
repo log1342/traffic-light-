@@ -83,6 +83,7 @@ radio.onReceivedString(function (receivedString) {
     } else if (receivedString == "EMERGENCY126") {
         basic.pause(1000)
         just_red()
+        basic.showIcon(IconNames.No)
     }
 })
 input.onButtonPressed(Button.B, function () {
